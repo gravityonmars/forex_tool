@@ -65,15 +65,15 @@ def get_forex_tool_properties():
 
     }
 
-def run_forex_tool(from_currency, to_currency, amount):
+def run_forex_tool(user_input):
     system_prompt = {
         "role": "system",
-        "content": """You are a forex information assistant. You have access to a tool called 'get_forex' that can provide current exchange rates and conversion information for currency pairs. When a user requests forex information, you should use the 'get_forex' tool to fetch the data and return it in a structured format."""
+        "content": """You are a forex information assistant. You have access to a tool called 'get_forex' that can provide current exchange rates and conversion information for currency pairs. When a user requests forex information, you should use the 'get_forex' tool to fetch the data and return it in a structured format. Anything not related to forex should not be respondend"""
     }
 
     user_prompt = {
         "role": "user",
-        "content": f"Get the forex information for {amount} {from_currency} to {to_currency}."
+        "content": user_input
     }
 
     response = groq_client.chat.completions.create(
@@ -116,9 +116,8 @@ def run_forex_tool(from_currency, to_currency, amount):
         result = response.choices[0].message.content
 
     return result
-from_currency = input("Enter the currency code to convert from (e.g., USD): ")
-to_currency = input("Enter the currency code to convert to (e.g., EUR): ")
-amount = float(input("Enter the amount to convert (default is 1.0): "))
-result = run_forex_tool(from_currency, to_currency, amount)
+
+user_input = input("Enter your request: ")
+result = run_forex_tool(user_input)
 
 print(result)
