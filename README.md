@@ -110,6 +110,4 @@ forex-converter/
 └── README.md
 ```
 
-## License
 
-This project is for learning and educational purposes.
